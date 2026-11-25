@@ -12,3 +12,18 @@ C:\Users\Компуктер\Desktop\НГТУ\курс 2\прога\BattleCity\ob
 C:\Users\Компуктер\Desktop\НГТУ\курс 2\прога\BattleCity\obj\Debug\net8.0\BattleCity.pdb
 C:\Users\Компуктер\Desktop\НГТУ\курс 2\прога\BattleCity\obj\Debug\net8.0\BattleCity.genruntimeconfig.cache
 C:\Users\Компуктер\Desktop\НГТУ\курс 2\прога\BattleCity\obj\Debug\net8.0\ref\BattleCity.dll
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\bin\Debug\net8.0\BattleCity.exe
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\bin\Debug\net8.0\BattleCity.deps.json
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\bin\Debug\net8.0\BattleCity.runtimeconfig.json
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\bin\Debug\net8.0\BattleCity.dll
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\bin\Debug\net8.0\BattleCity.pdb
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.AssemblyInfoInputs.cache
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.AssemblyInfo.cs
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.csproj.CoreCompileInputs.cache
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.sourcelink.json
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.dll
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\refint\BattleCity.dll
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.pdb
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\BattleCity.genruntimeconfig.cache
+C:\Users\Компуктер\Desktop\Lab3\BattleCity\obj\Debug\net8.0\ref\BattleCity.dll

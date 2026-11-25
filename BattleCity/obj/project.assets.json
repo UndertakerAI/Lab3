@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Компуктер\\Desktop\\НГТУ\\курс 2\\прога\\BattleCity\\BattleCity.csproj",
+      "projectUniqueName": "C:\\Users\\Компуктер\\Desktop\\Lab3\\BattleCity\\BattleCity.csproj",
       "projectName": "BattleCity",
-      "projectPath": "C:\\Users\\Компуктер\\Desktop\\НГТУ\\курс 2\\прога\\BattleCity\\BattleCity.csproj",
+      "projectPath": "C:\\Users\\Компуктер\\Desktop\\Lab3\\BattleCity\\BattleCity.csproj",
       "packagesPath": "C:\\Users\\Компуктер\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Компуктер\\Desktop\\НГТУ\\курс 2\\прога\\BattleCity\\obj\\",
+      "outputPath": "C:\\Users\\Компуктер\\Desktop\\Lab3\\BattleCity\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
