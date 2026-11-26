@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using BattleCity.Models;
@@ -7,7 +7,7 @@ namespace BattleCity
 {
     internal class Program
     {
-        private static Game game;
+        private static Game game = new();
         private static string notificationMessage = "";
         private static int notificationTicks = 0;
 
@@ -43,7 +43,7 @@ namespace BattleCity
                 {
                     if (GameSerializer.SaveExists())
                     {
-                        game = GameSerializer.Load();
+                        game = GameSerializer.Load()!;
 
                         if (game != null)
                             await RunGame();
@@ -71,8 +71,38 @@ namespace BattleCity
         {
             Console.Clear();
 
+            if (Console.WindowWidth < 70 || Console.WindowHeight < 31)
+            {
+                Console.WriteLine("Увеличьте окно терминала минимум до 70 столбцов и 31 строки.");
+                Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
+                Console.ReadKey(true);
+                return;
+            }
+
+            bool showingResizeMessage = false;
+
             while (game.Status == GameStatus.Playing || game.Status == GameStatus.Paused)
             {
+                if (Console.WindowWidth < 70 || Console.WindowHeight < 31)
+                {
+                    if (!showingResizeMessage)
+                    {
+                        Console.Clear();
+                        Console.CursorVisible = false;
+                        Console.WriteLine("Увеличьте окно терминала минимум до 70 столбцов и 31 строки.");
+                        showingResizeMessage = true;
+                    }
+
+                    await Task.Delay(100);
+                    continue;
+                }
+
+                if (showingResizeMessage)
+                {
+                    Console.Clear();
+                    showingResizeMessage = false;
+                }
+
                 bool continueGame = ProcessInput();
 
                 if (!continueGame)
@@ -142,7 +172,7 @@ namespace BattleCity
                         continue;
 
                     case ConsoleKey.F9:
-                        Game loadedGame = GameSerializer.Load();
+                        Game? loadedGame = GameSerializer.Load();
 
                         if (loadedGame != null)
                         {
@@ -202,7 +232,8 @@ namespace BattleCity
         // Отрисовка игрового поля
         private static void Render()
         {
-            Console.SetCursorPosition(0, 1);
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
 
             int width = game.Field.Width;
             int height = game.Field.Height;
@@ -376,8 +407,10 @@ namespace BattleCity
             }
             else
             {
-                Console.WriteLine(new string(' ', 70));
+                Console.Write(new string(' ', 70));
             }
+
+            Console.CursorVisible = false;
         }
 
         // Символ танка в зависимости от направления

@@ -3,21 +3,21 @@ using System.Linq;
 
 namespace BattleCity.Models
 {
-    // Класс, описывающий игровое поле, хранит размеры поля, координаты базы и список препятствий
+    // РРіСЂРѕРІРѕРµ РїРѕР»Рµ С…СЂР°РЅРёС‚ СЂР°Р·РјРµСЂС‹, РїРѕР»РѕР¶РµРЅРёРµ Р±Р°Р·С‹ Рё РїСЂРµРїСЏС‚СЃС‚РІРёСЏ.
     public class GameField
     {
-        // Ширина и высота игрового поля
+        // РЁРёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ РІ РєР»РµС‚РєР°С….
         public int Width { get; set; }
         public int Height { get; set; }
 
-        // Координаты базы игрока
+        // РљРѕРѕСЂРґРёРЅР°С‚С‹ Р±Р°Р·С‹ РЅР° РїРѕР»Рµ.
         public int BaseX { get; set; }
         public int BaseY { get; set; }
 
-        // Список всех препятствий, расположенных на игровом поле
+        // РџСЂРµРїСЏС‚СЃС‚РІРёСЏ, СЂР°Р·РјРµС‰С‘РЅРЅС‹Рµ РЅР° РёРіСЂРѕРІРѕРј РїРѕР»Рµ.
         public List<Obstacle> Obstacles { get; set; }
 
-        // Конструктор по умолчанию
+        // РЎРѕР·РґР°С‚СЊ РїРѕР»Рµ СЃС‚Р°РЅРґР°СЂС‚РЅРѕРіРѕ СЂР°Р·РјРµСЂР°.
         public GameField()
         {
             Width = 30;
@@ -26,7 +26,7 @@ namespace BattleCity.Models
             Obstacles = new List<Obstacle>();
         }
 
-        // Создаёт игровое поле с заданными размерами
+        // РЎРѕР·РґР°С‚СЊ РїРѕР»Рµ Р·Р°РґР°РЅРЅРѕРіРѕ СЂР°Р·РјРµСЂР° Рё СЂР°Р·РјРµСЃС‚РёС‚СЊ Р±Р°Р·Сѓ.
         public GameField(int width, int height)
         {
             Width = width;
@@ -37,15 +37,15 @@ namespace BattleCity.Models
 
             Obstacles = new List<Obstacle>();
         }
-        // Проверяет, находятся ли указанные координаты в пределах игрового поля
+        // РџСЂРѕРІРµСЂРёС‚СЊ, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РєР»РµС‚РєР° РІРЅСѓС‚СЂРё РїРѕР»СЏ.
         public bool IsInside(int x, int y)
         {
             return x >= 0 && x < Width &&
                    y >= 0 && y < Height;
         }
 
-        // Находит препятствие по указанным координатам
-        public Obstacle GetObstacleAt(int x, int y)
+        // РќР°Р№С‚Рё РЅРµРїРѕРІСЂРµР¶РґС‘РЅРЅРѕРµ РїСЂРµРїСЏС‚СЃС‚РІРёРµ РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°Рј.
+        public Obstacle? GetObstacleAt(int x, int y)
         {
             return Obstacles.FirstOrDefault(
                 obstacle => obstacle.X == x &&
@@ -53,7 +53,7 @@ namespace BattleCity.Models
                             !obstacle.IsDestroyed);
         }
 
-        // Добавляет препятствие на игровое поле, если его координаты находятся в пределах поля
+        // Р”РѕР±Р°РІРёС‚СЊ РїСЂРµРїСЏС‚СЃС‚РІРёРµ, РµСЃР»Рё РµРіРѕ РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅР°С…РѕРґСЏС‚СЃСЏ РІРЅСѓС‚СЂРё РїРѕР»СЏ.
         public void AddObstacle(Obstacle obstacle)
         {
             if (IsInside(obstacle.X, obstacle.Y))

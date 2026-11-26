@@ -20,7 +20,7 @@ public class BulletTests
         Assert.AreEqual(7, bullet.Y);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(Direction.Up, 3, 4)]
     [DataRow(Direction.Down, 3, 6)]
     [DataRow(Direction.Left, 2, 5)]
@@ -72,10 +72,10 @@ public class GameFieldTests
         Assert.AreEqual(8, field.Height);
         Assert.AreEqual(6, field.BaseX);
         Assert.AreEqual(6, field.BaseY);
-        Assert.AreEqual(0, field.Obstacles.Count);
+        Assert.IsEmpty(field.Obstacles);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, true)]
     [DataRow(11, 7, true)]
     [DataRow(-1, 0, false)]
@@ -91,7 +91,7 @@ public class GameFieldTests
         var inside = new Obstacle(2, 2, "Brick");
         field.AddObstacle(new Obstacle(5, 2, "Brick"));
         field.AddObstacle(inside);
-        Assert.AreEqual(1, field.Obstacles.Count);
+        Assert.HasCount(1, field.Obstacles);
         Assert.AreSame(inside, field.GetObstacleAt(2, 2));
         inside.TakeDamage();
         Assert.IsNull(field.GetObstacleAt(2, 2));
@@ -132,13 +132,13 @@ public class GameTests
     {
         var game = new Game();
         game.Shoot(game.Player);
-        Assert.AreEqual(1, game.Bullets.Count);
+        Assert.HasCount(1, game.Bullets);
         Assert.AreEqual(15, game.Bullets[0].X);
         Assert.AreEqual(15, game.Bullets[0].Y);
         Assert.AreEqual(Direction.Up, game.Bullets[0].Direction);
         Assert.AreEqual(5, game.Player.ShootCooldown);
         game.Shoot(game.Player);
-        Assert.AreEqual(1, game.Bullets.Count);
+        Assert.HasCount(1, game.Bullets);
     }
 
     [TestMethod]
@@ -151,7 +151,7 @@ public class GameTests
         game.Bullets.Add(new Bullet(5, 5, Direction.Up, true));
         game.Update();
         Assert.IsTrue(brick.IsDestroyed);
-        Assert.AreEqual(0, game.Bullets.Count);
+        Assert.IsEmpty(game.Bullets);
     }
 
     [TestMethod]
@@ -166,7 +166,7 @@ public class GameTests
         game.Update();
         Assert.AreEqual(2, game.Player.Health);
         Assert.AreEqual(3, game.Lives);
-        Assert.AreEqual(0, game.Bullets.Count);
+        Assert.IsEmpty(game.Bullets);
     }
 
     [TestMethod]
@@ -180,7 +180,7 @@ public class GameTests
         game.Update();
         Assert.AreEqual(100, game.Score);
         Assert.AreEqual(1, game.EnemiesDestroyed);
-        Assert.AreEqual(0, game.Enemies.Count);
+        Assert.IsEmpty(game.Enemies);
         Assert.AreEqual(GameStatus.Won, game.Status);
     }
 
@@ -237,7 +237,7 @@ public class GameSerializerTests
             Assert.IsNotNull(loaded);
             Assert.AreEqual(9, loaded.Player.X);
             Assert.AreEqual(250, loaded.Score);
-            Assert.AreEqual(1, loaded.Enemies.Count);
+            Assert.HasCount(1, loaded.Enemies);
             Assert.AreEqual(GameStatus.Playing, loaded.Status);
         }
         finally

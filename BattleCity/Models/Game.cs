@@ -16,11 +16,11 @@ namespace BattleCity.Models
     {
         private static readonly Random Random = new Random();
 
-        public GameField Field { get; set; }
-        public Tank Player { get; set; }
+        public GameField Field { get; set; } = null!;
+        public Tank Player { get; set; } = null!;
 
-        public List<Tank> Enemies { get; set; }
-        public List<Bullet> Bullets { get; set; }
+        public List<Tank> Enemies { get; set; } = null!;
+        public List<Bullet> Bullets { get; set; } = null!;
 
         public int Lives { get; set; }
         public int Score { get; set; }
@@ -41,7 +41,7 @@ namespace BattleCity.Models
             Initialize();
         }
 
-        // Инициализация новой игры
+        // РЎРѕР·РґР°С‚СЊ РЅРѕРІРѕРµ РёРіСЂРѕРІРѕРµ РїРѕР»Рµ Рё СЃР±СЂРѕСЃРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹.
         public void Initialize()
         {
             Field = new GameField(30, 20);
@@ -65,7 +65,7 @@ namespace BattleCity.Models
 
             Status = GameStatus.Playing;
 
-            // Защита базы
+            // Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ Р·Р°С‰РёС‚РЅС‹С… Р±Р»РѕРєРѕРІ РІРѕРєСЂСѓРі Р±Р°Р·С‹.
             int bx = Field.BaseX;
             int by = Field.BaseY;
 
@@ -73,7 +73,7 @@ namespace BattleCity.Models
             Field.AddObstacle(new Obstacle(bx + 1, by, "Brick"));
             Field.AddObstacle(new Obstacle(bx, by - 1, "Brick"));
 
-            // Верхняя часть карты
+            // РџСЂРµРїСЏС‚СЃС‚РІРёСЏ РІ РІРµСЂС…РЅРµР№ Р»РµРІРѕР№ С‡Р°СЃС‚Рё РїРѕР»СЏ.
             Field.AddObstacle(new Obstacle(5, 3, "Brick"));
             Field.AddObstacle(new Obstacle(6, 3, "Brick"));
             Field.AddObstacle(new Obstacle(7, 3, "Brick"));
@@ -81,7 +81,7 @@ namespace BattleCity.Models
             Field.AddObstacle(new Obstacle(20, 3, "Steel"));
             Field.AddObstacle(new Obstacle(21, 3, "Steel"));
 
-            // Центральная часть
+            // РџСЂРµРїСЏС‚СЃС‚РІРёСЏ РІ СЃСЂРµРґРЅРµР№ С‡Р°СЃС‚Рё РїРѕР»СЏ.
             Field.AddObstacle(new Obstacle(4, 7, "Brick"));
             Field.AddObstacle(new Obstacle(5, 7, "Brick"));
             Field.AddObstacle(new Obstacle(6, 7, "Steel"));
@@ -93,7 +93,7 @@ namespace BattleCity.Models
             Field.AddObstacle(new Obstacle(23, 7, "Steel"));
             Field.AddObstacle(new Obstacle(24, 7, "Brick"));
 
-            // Нижняя часть
+            // РџСЂРµРїСЏС‚СЃС‚РІРёСЏ РІ РЅРёР¶РЅРµР№ С‡Р°СЃС‚Рё РїРѕР»СЏ.
             Field.AddObstacle(new Obstacle(3, 12, "Brick"));
             Field.AddObstacle(new Obstacle(4, 12, "Steel"));
             Field.AddObstacle(new Obstacle(5, 12, "Brick"));
@@ -102,7 +102,7 @@ namespace BattleCity.Models
             Field.AddObstacle(new Obstacle(25, 12, "Brick"));
             Field.AddObstacle(new Obstacle(26, 12, "Steel"));
 
-            // Водоёмы
+            // Р’РѕРґРЅС‹Рµ СѓС‡Р°СЃС‚РєРё РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ.
             Field.AddObstacle(new Obstacle(10, 5, "Water"));
             Field.AddObstacle(new Obstacle(11, 5, "Water"));
             Field.AddObstacle(new Obstacle(12, 5, "Water"));
@@ -117,7 +117,7 @@ namespace BattleCity.Models
             Field.AddObstacle(new Obstacle(20, 15, "Water"));
         }
 
-        // Перемещение игрока
+        // РџРѕРІРµСЂРЅСѓС‚СЊ РёРіСЂРѕРєР° Рё РїРµСЂРµРјРµСЃС‚РёС‚СЊ РµРіРѕ РЅР° СЃРѕСЃРµРґРЅСЋСЋ РєР»РµС‚РєСѓ, РµСЃР»Рё РїСѓС‚СЊ СЃРІРѕР±РѕРґРµРЅ.
         public void MovePlayer(Direction direction)
         {
             if (Status != GameStatus.Playing ||
@@ -144,13 +144,13 @@ namespace BattleCity.Models
             }
         }
 
-        // Проверка возможности перемещения
-        private bool CanMoveTo(int x, int y, Tank movingTank)
+        // РџСЂРѕРІРµСЂРёС‚СЊ, РјРѕР¶РµС‚ Р»Рё С‚Р°РЅРє Р·Р°РЅСЏС‚СЊ СѓРєР°Р·Р°РЅРЅСѓСЋ РєР»РµС‚РєСѓ.
+        private bool CanMoveTo(int x, int y, Tank? movingTank)
         {
             if (!Field.IsInside(x, y))
                 return false;
 
-            Obstacle obstacle = Field.GetObstacleAt(x, y);
+            Obstacle? obstacle = Field.GetObstacleAt(x, y);
 
             if (obstacle != null && obstacle.BlocksTank())
                 return false;
@@ -174,17 +174,17 @@ namespace BattleCity.Models
             return true;
         }
 
-        // Стрельба
-        public void Shoot(Tank tank)
+        // РЎРѕР·РґР°С‚СЊ СЃРЅР°СЂСЏРґ, РµСЃР»Рё С‚Р°РЅРє Р¶РёРІ Рё РµРіРѕ РѕСЂСѓР¶РёРµ РіРѕС‚РѕРІРѕ Рє РІС‹СЃС‚СЂРµР»Сѓ.
+        public void Shoot(Tank? tank)
         {
-            // Нельзя стрелять во время паузы
+            // РќРµ СЃС‚СЂРµР»СЏС‚СЊ, РµСЃР»Рё РёРіСЂР° РѕСЃС‚Р°РЅРѕРІР»РµРЅР° РёР»Рё С‚Р°РЅРє РЅРµ РјРѕР¶РµС‚ РІРµСЃС‚Рё РѕРіРѕРЅСЊ.
             if (Status != GameStatus.Playing ||
                 tank == null ||
                 !tank.IsAlive ||
                 tank.ShootCooldown > 0)
                 return;
 
-            // Проверка клетки перед танком
+            // РћРїСЂРµРґРµР»РёС‚СЊ РєР»РµС‚РєСѓ РїРµСЂРµРґ С‚Р°РЅРєРѕРј РґР»СЏ РїСЂРѕРІРµСЂРєРё РіСЂР°РЅРёС†С‹ РїРѕР»СЏ.
             int x = tank.X;
             int y = tank.Y;
 
@@ -199,7 +199,7 @@ namespace BattleCity.Models
             if (!Field.IsInside(x, y))
                 return;
 
-            // Создание снаряда
+            // Р”РѕР±Р°РІРёС‚СЊ СЃРЅР°СЂСЏРґ РІ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРЅР°СЂСЏРґРѕРІ.
             Bullets.Add(new Bullet(
                 tank.X,
                 tank.Y,
@@ -210,10 +210,10 @@ namespace BattleCity.Models
             tank.ShootCooldown = tank.IsPlayer ? 5 : 12;
         }
 
-        // Обновление игры
+        // РћР±РЅРѕРІРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РЅР° РѕРґРёРЅ РёРіСЂРѕРІРѕР№ С‚Р°РєС‚.
         public void Update()
         {
-            // Во время паузы игровой мир не обновляется
+            // Р’Рѕ РІСЂРµРјСЏ РїР°СѓР·С‹ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РЅРµ РјРµРЅСЏРµС‚СЃСЏ.
             if (Status != GameStatus.Playing)
                 return;
 
@@ -245,7 +245,7 @@ namespace BattleCity.Models
             CheckGameStatus();
         }
 
-        // Создание противника
+        // Р”РѕР±Р°РІРёС‚СЊ РѕС‡РµСЂРµРґРЅРѕРіРѕ РїСЂРѕС‚РёРІРЅРёРєР°, РµСЃР»Рё РґРѕСЃС‚РёРіРЅСѓС‚ РёРЅС‚РµСЂРІР°Р» РїРѕСЏРІР»РµРЅРёСЏ.
         private void SpawnEnemy()
         {
             if (EnemiesSpawned >= TotalEnemies ||
@@ -268,7 +268,7 @@ namespace BattleCity.Models
             }
         }
 
-        // Управление противниками
+        // РћР±РЅРѕРІРёС‚СЊ РїРѕРІРµРґРµРЅРёРµ РІСЃРµС… Р¶РёРІС‹С… РїСЂРѕС‚РёРІРЅРёРєРѕРІ.
         private void UpdateEnemies()
         {
             foreach (Tank enemy in Enemies)
@@ -276,7 +276,7 @@ namespace BattleCity.Models
                 if (!enemy.IsAlive)
                     continue;
 
-                // Возможность выстрела
+                // Р•СЃР»Рё РёРіСЂРѕРє РЅР° Р»РёРЅРёРё РѕРіРЅСЏ, РїСЂРѕС‚РёРІРЅРёРє С†РµР»РёС‚СЃСЏ Рё СЃС‚СЂРµР»СЏРµС‚.
                 if (TryAimAtPlayer(enemy))
                 {
                     if (enemy.ShootCooldown == 0)
@@ -285,7 +285,7 @@ namespace BattleCity.Models
                     continue;
                 }
 
-                // Движение
+                // РџРµСЂРµРјРµС‰Р°С‚СЊ РїСЂРѕС‚РёРІРЅРёРєРѕРІ С‚РѕР»СЊРєРѕ РЅР° РєР°Р¶РґРѕРј С‚СЂРµС‚СЊРµРј С‚Р°РєС‚Рµ.
                 if (TickCounter % 3 != 0)
                     continue;
 
@@ -293,7 +293,7 @@ namespace BattleCity.Models
             }
         }
 
-        // Проверка есть ли игрок на линии огня
+        // РџСЂРѕРІРµСЂРёС‚СЊ, РјРѕР¶РµС‚ Р»Рё РїСЂРѕС‚РёРІРЅРёРє РїСЂРёС†РµР»РёС‚СЊСЃСЏ РІ РёРіСЂРѕРєР° РїРѕ РїСЂСЏРјРѕР№ Р»РёРЅРёРё.
         private bool TryAimAtPlayer(Tank enemy)
         {
             if (!Player.IsAlive)
@@ -324,7 +324,7 @@ namespace BattleCity.Models
             return true;
         }
 
-        // Проверка препятствий на линии стрельбы
+        // РџСЂРѕРІРµСЂРёС‚СЊ, СЃРІРѕР±РѕРґРµРЅ Р»Рё РїСѓС‚СЊ СЃРЅР°СЂСЏРґР° РґРѕ С†РµР»Рё.
         private bool HasClearShot(
             Tank tank,
             Direction direction,
@@ -350,14 +350,14 @@ namespace BattleCity.Models
                 if (x == targetX && y == targetY)
                     return true;
 
-                Obstacle obstacle = Field.GetObstacleAt(x, y);
+                Obstacle? obstacle = Field.GetObstacleAt(x, y);
 
                 if (obstacle != null && obstacle.BlocksBullet())
                     return false;
             }
         }
 
-        // Выбор направления движения противника
+        // РџРµСЂРµРјРµСЃС‚РёС‚СЊ РїСЂРѕС‚РёРІРЅРёРєР° РІ СЃС‚РѕСЂРѕРЅСѓ РІС‹Р±СЂР°РЅРЅРѕР№ С†РµР»Рё.
         private void MoveEnemyTowardsTarget(Tank enemy)
         {
             List<Direction> directions = new List<Direction>();
@@ -365,7 +365,7 @@ namespace BattleCity.Models
             int dx = Player.X - enemy.X;
             int dy = Player.Y - enemy.Y;
 
-            // Сначала движение по оси, где расстояние больше
+            // Р’С‹Р±СЂР°С‚СЊ РѕСЃСЊ, РїРѕ РєРѕС‚РѕСЂРѕР№ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ С†РµР»Рё Р±РѕР»СЊС€Рµ.
             if (Math.Abs(dx) >= Math.Abs(dy))
             {
                 if (dx > 0) directions.Add(Direction.Right);
@@ -383,7 +383,7 @@ namespace BattleCity.Models
                 if (dx < 0) directions.Add(Direction.Left);
             }
 
-            // Дополнительные направления для обхода препятствий
+            // РћСЃС‚Р°РІРёС‚СЊ С‚РѕР»СЊРєРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ, РґРѕСЃС‚СѓРїРЅС‹Рµ РїСЂРѕС‚РёРІРЅРёРєСѓ.
             List<Direction> alternatives = new List<Direction>
             {
                 Direction.Up,
@@ -429,11 +429,11 @@ namespace BattleCity.Models
                 }
             }
 
-            // Поворот, если движение не возможно
+            // Р•СЃР»Рё СЃРІРѕР±РѕРґРЅРѕРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ РЅРµС‚, РІС‹Р±СЂР°С‚СЊ РЅР°РїСЂР°РІР»РµРЅРёРµ СЃР»СѓС‡Р°Р№РЅРѕ.
             enemy.Rotate((Direction)Random.Next(4));
         }
 
-        // Обновление всех снарядов
+        // РџРµСЂРµРјРµСЃС‚РёС‚СЊ СЃРЅР°СЂСЏРґС‹ Рё РѕР±СЂР°Р±РѕС‚Р°С‚СЊ СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ Р·Р° РѕРґРёРЅ С‚Р°РєС‚.
         private void UpdateBullets()
         {
             var activeBullets = Bullets
@@ -443,7 +443,7 @@ namespace BattleCity.Models
             var oldPositions = new Dictionary<Bullet, (int X, int Y)>();
             var newPositions = new Dictionary<Bullet, (int X, int Y)>();
 
-            // Рассчёт перемещения всех снарядов
+            // РЎРѕС…СЂР°РЅРёС‚СЊ Р°РєС‚РёРІРЅС‹Рµ СЃРЅР°СЂСЏРґС‹ РїРµСЂРµРґ РѕР±СЂР°Р±РѕС‚РєРѕР№ СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№.
             foreach (Bullet bullet in activeBullets)
             {
                 oldPositions[bullet] = (bullet.X, bullet.Y);
@@ -462,7 +462,7 @@ namespace BattleCity.Models
                 newPositions[bullet] = (x, y);
             }
 
-            // Проверка столкновения снарядов между собой
+            // РџСЂРѕРІРµСЂРёС‚СЊ РїРѕРїР°СЂРЅС‹Рµ СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ СЃРЅР°СЂСЏРґРѕРІ.
             for (int i = 0; i < activeBullets.Count; i++)
             {
                 Bullet first = activeBullets[i];
@@ -477,7 +477,7 @@ namespace BattleCity.Models
                     if (!second.IsActive)
                         continue;
 
-                    // Свои снаряды не могут уничтожить друг друга
+                    // РЎРЅР°СЂСЏРґС‹ РѕРґРЅРѕР№ СЃС‚РѕСЂРѕРЅС‹ РЅРµ СѓРЅРёС‡С‚РѕР¶Р°СЋС‚ РґСЂСѓРі РґСЂСѓРіР°.
                     if (first.IsPlayerBullet == second.IsPlayerBullet)
                         continue;
 
@@ -487,12 +487,12 @@ namespace BattleCity.Models
                     var firstNew = newPositions[first];
                     var secondNew = newPositions[second];
 
-                    // Оба снаряда попали в одну клетку
+                    // РЎРЅР°СЂСЏРґС‹ СЃС‚РѕР»РєРЅСѓР»РёСЃСЊ РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ.
                     bool sameCell =
                         firstNew.X == secondNew.X &&
                         firstNew.Y == secondNew.Y;
 
-                    // Снаряды пересеклись на встречных траекториях
+                    // РЎРЅР°СЂСЏРґС‹ РїРµСЂРµСЃРµРєР»РёСЃСЊ, РїРѕРјРµРЅСЏРІС€РёСЃСЊ РєР»РµС‚РєР°РјРё Р·Р° РѕРґРёРЅ С‚Р°РєС‚.
                     bool crossed =
                         firstOld.X == secondNew.X &&
                         firstOld.Y == secondNew.Y &&
@@ -507,7 +507,7 @@ namespace BattleCity.Models
                 }
             }
 
-            // Оставшиеся снаряды
+            // РџРµСЂРµРјРµСЃС‚РёС‚СЊ СЃРЅР°СЂСЏРґ Рё РїСЂРѕРІРµСЂРёС‚СЊ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РёРіСЂРѕРІС‹РјРё РѕР±СЉРµРєС‚Р°РјРё.
             foreach (Bullet bullet in activeBullets)
             {
                 if (!bullet.IsActive)
@@ -524,8 +524,8 @@ namespace BattleCity.Models
                     continue;
                 }
 
-                // Столкновение с препятствием
-                Obstacle obstacle = Field.GetObstacleAt(
+                // РћР±СЂР°Р±РѕС‚Р°С‚СЊ РїРѕРїР°РґР°РЅРёРµ СЃРЅР°СЂСЏРґР° РІ РїСЂРµРїСЏС‚СЃС‚РІРёРµ.
+                Obstacle? obstacle = Field.GetObstacleAt(
                     bullet.X, bullet.Y);
 
                 if (obstacle != null && obstacle.BlocksBullet())
@@ -535,7 +535,7 @@ namespace BattleCity.Models
                     continue;
                 }
 
-                // Попадание в базу
+                // РћР±СЂР°Р±РѕС‚Р°С‚СЊ РїРѕРїР°РґР°РЅРёРµ СЃРЅР°СЂСЏРґР° РІ Р±Р°Р·Сѓ.
                 if (bullet.X == Field.BaseX &&
                     bullet.Y == Field.BaseY)
                 {
@@ -546,7 +546,7 @@ namespace BattleCity.Models
                     continue;
                 }
 
-                // Попадание в игрока
+                // РћР±СЂР°Р±РѕС‚Р°С‚СЊ РїРѕРїР°РґР°РЅРёРµ РІСЂР°Р¶РµСЃРєРѕРіРѕ СЃРЅР°СЂСЏРґР° РІ РёРіСЂРѕРєР°.
                 if (!bullet.IsPlayerBullet &&
                     Player.IsAlive &&
                     bullet.X == Player.X &&
@@ -571,10 +571,10 @@ namespace BattleCity.Models
                     continue;
                 }
 
-                // Попадание во вражеский танк
+                // РћР±СЂР°Р±РѕС‚Р°С‚СЊ РїРѕРїР°РґР°РЅРёРµ СЃРЅР°СЂСЏРґР° РёРіСЂРѕРєР° РІРѕ РІСЂР°Р¶РµСЃРєРёР№ С‚Р°РЅРє.
                 if (bullet.IsPlayerBullet)
                 {
-                    Tank enemy = Enemies.FirstOrDefault(
+                    Tank? enemy = Enemies.FirstOrDefault(
                         e => e.IsAlive &&
                              e.X == bullet.X &&
                              e.Y == bullet.Y);
@@ -594,7 +594,7 @@ namespace BattleCity.Models
             }
         }
 
-        // Проверка завершения игры
+        // РћРїСЂРµРґРµР»РёС‚СЊ, Р·Р°РІРµСЂС€РёР»Р°СЃСЊ Р»Рё РёРіСЂР° РїРѕР±РµРґРѕР№ РёР»Рё РїРѕСЂР°Р¶РµРЅРёРµРј.
         private void CheckGameStatus()
         {
             if (Lives <= 0 || !BaseAlive)

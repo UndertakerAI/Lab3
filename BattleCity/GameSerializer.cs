@@ -5,20 +5,20 @@ using BattleCity.Models;
 
 namespace BattleCity
 {
-    // Статический класс для сохранения и загрузки состояния игры
+    // РЎРѕС…СЂР°РЅСЏРµС‚ Рё Р·Р°РіСЂСѓР¶Р°РµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РІ С„РѕСЂРјР°С‚Рµ JSON.
     public static class GameSerializer
     {
         private const string SavePath = "savegame.json";
 
-        // Настройки сериализации JSON
+        // РџР°СЂР°РјРµС‚СЂС‹ СЃРµСЂРёР°Р»РёР·Р°С†РёРё JSON.
         private static readonly JsonSerializerOptions Options =
             new JsonSerializerOptions
             {
-                // Включает форматирование JSON с отступами
+                // Р—Р°РїРёСЃС‹РІР°С‚СЊ JSON СЃ РѕС‚СЃС‚СѓРїР°РјРё РґР»СЏ СѓРґРѕР±СЃС‚РІР° С‡С‚РµРЅРёСЏ.
                 WriteIndented = true
             };
 
-        // Метод сохранения текущего состояния игры
+        // РЎРѕС…СЂР°РЅРёС‚СЊ С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РІ С„Р°Р№Р».
         public static bool Save(Game game)
         {
             try
@@ -35,8 +35,8 @@ namespace BattleCity
             }
         }
 
-        // Метод загрузки сохранённой игры
-        public static Game Load()
+        // Р—Р°РіСЂСѓР·РёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РёР· С„Р°Р№Р»Р° СЃРѕС…СЂР°РЅРµРЅРёСЏ.
+        public static Game? Load()
         {
             try
             {
@@ -54,13 +54,13 @@ namespace BattleCity
             }
         }
 
-        // Проверяет, существует ли файл сохранения
+        // РџСЂРѕРІРµСЂРёС‚СЊ, СЃСѓС‰РµСЃС‚РІСѓРµС‚ Р»Рё С„Р°Р№Р» СЃРѕС…СЂР°РЅРµРЅРёСЏ.
         public static bool SaveExists()
         {
             return File.Exists(SavePath);
         }
 
-        // Метод удаления сохранённой игры
+        // РЈРґР°Р»РёС‚СЊ С„Р°Р№Р» СЃРѕС…СЂР°РЅРµРЅРёСЏ, РµСЃР»Рё РѕРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚.
         public static void DeleteSave()
         {
             if (File.Exists(SavePath))
